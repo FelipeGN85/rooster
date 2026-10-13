@@ -1,0 +1,96 @@
+<section class="panel" aria-labelledby="online-title" aria-live="polite">
+  @switch (online.status()) {
+    @case ('idle') {
+      <div class="row">
+        <div class="copy">
+          <h2 id="online-title">Play a friend online</h2>
+          <p>Send them a link and play from two phones or computers.</p>
+        </div>
+        <button type="button" class="btn btn-dark" (click)="online.host()">Create invite link</button>
+      </div>
+    }
+
+    @case ('opening') {
+      <h2 id="online-title">Setting up your game…</h2>
+    }
+
+    @case ('connecting') {
+      <h2 id="online-title">Joining your friend’s game…</h2>
+      <p>This can take a few seconds.</p>
+      <button type="button" class="btn btn-light" (click)="online.leave()">Cancel</button>
+    }
+
+    @case ('connected') {
+      <div class="row">
+        <div class="copy">
+          <h2 id="online-title"><span class="dot" aria-hidden="true"></span>Connected</h2>
+          <p>
+            You play
+            <strong [class.x]="online.myMark() === 'X'" [class.o]="online.myMark() === 'O'">
+              {{ online.myMark() }}</strong
+            >.
+            @if (online.role() === 'host') {
+              You open the first round.
+            }
+          </p>
+        </div>
+        <button type="button" class="btn btn-light" (click)="online.leave()">Leave game</button>
+      </div>
+    }
+
+    @case ('failed') {
+      <h2 id="online-title">Couldn’t start the online game</h2>
+      <p>{{ online.error() }}</p>
+      <button type="button" class="btn btn-dark" (click)="online.leave()">Play on this screen</button>
+    }
+
+    @default {
+      <!-- waiting, or lost: the host still shows its link so the friend can (re)join. -->
+      @if (online.role() === 'host') {
+        <h2 id="online-title">
+          @if (online.status() === 'lost') {
+            Your friend left
+          } @else {
+            Send this link to a friend
+          }
+        </h2>
+        <p>
+          @if (online.status() === 'lost') {
+            They can come back with the same link. The score is kept.
+          } @else {
+            The game starts as soon as they open it. Keep this page open.
+          }
+        </p>
+
+        @if (online.inviteUrl(); as url) {
+          <div class="link">
+            <label class="visually-hidden" for="invite-link">Invite link</label>
+            <input
+              #linkField
+              id="invite-link"
+              type="text"
+              readonly
+              [value]="url"
+              (focus)="linkField.select()"
+            />
+            <button type="button" class="btn btn-dark" (click)="copy(url)">
+              {{ copied() ? 'Copied!' : 'Copy' }}
+            </button>
+            @if (canShare) {
+              <button type="button" class="btn btn-light" (click)="share(url)">Share</button>
+            }
+          </div>
+        }
+
+        <button type="button" class="text-btn" (click)="online.leave()">Cancel online game</button>
+      } @else {
+        <h2 id="online-title">Lost your friend</h2>
+        <p>The connection dropped. If their page is still open, you can jump back in.</p>
+        <div class="actions">
+          <button type="button" class="btn btn-dark" (click)="rejoin()">Reconnect</button>
+          <button type="button" class="btn btn-light" (click)="online.leave()">Play on this screen</button>
+        </div>
+      }
+    }
+  }
+</section>
