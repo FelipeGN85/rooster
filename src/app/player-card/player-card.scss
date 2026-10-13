@@ -1,0 +1,99 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.score {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 11vw, 72px);
+  line-height: 1;
+  /* An offset shadow, not an outline: a stroke would fill Bungee's narrow 0. */
+  text-shadow: 4px 4px 0 var(--ink);
+}
+
+.x {
+  color: var(--x);
+}
+
+.o {
+  color: var(--o);
+}
+
+.name {
+  padding-bottom: 2px;
+  border-bottom: 3px solid transparent;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.active {
+  border-bottom-color: var(--ink);
+}
+
+.figure {
+  position: relative;
+  width: min(100%, 108px);
+  margin-top: 44px;
+}
+
+.bubble {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  z-index: 2;
+  margin: 0;
+  padding: 8px 12px;
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 3px 3px 0 var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  animation: pop-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* The tail, pointing down at the robot. */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border-right: 3px solid var(--ink);
+    border-bottom: 3px solid var(--ink);
+    background: var(--white);
+    transform: translate(-50%, -6px) rotate(45deg);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+}
+
+@media (min-width: 960px) {
+  .figure {
+    width: min(100%, 300px);
+    margin-top: 64px;
+  }
+
+  .bubble {
+    font-size: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    animation: none;
+  }
+}

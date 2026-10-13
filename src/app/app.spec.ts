@@ -19,7 +19,7 @@ describe('App', () => {
   it('starts with an empty board and X to move', async () => {
     const root = (await render()).nativeElement as HTMLElement;
     expect(cells(root)).toHaveLength(9);
-    expect(root.querySelector('.status')?.textContent).toContain('X’s turn');
+    expect(root.querySelector('.status')?.textContent).toContain('Bolt’s turn');
   });
 
   it('plays a local game through to a win and locks the board', async () => {
@@ -31,7 +31,7 @@ describe('App', () => {
       await fixture.whenStable();
     }
 
-    expect(root.querySelector('.status')?.textContent).toContain('X wins!');
+    expect(root.querySelector('.status')?.textContent).toContain('Bolt wins!');
     expect(cells(root).every((cell) => cell.disabled)).toBe(true);
     expect(root.querySelector('app-board .strike')).not.toBeNull();
   });
