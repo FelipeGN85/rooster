@@ -5,34 +5,28 @@
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
+  /* Comic halftone over the yellow. */
+  background-image: radial-gradient(circle, rgb(17 17 17 / 0.12) 3.5px, transparent 4px);
+  background-size: 22px 22px;
 }
 
-.wallpaper {
+.bolt {
   position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
+  top: 70px;
+  display: none;
+  width: 64px;
+  fill: var(--white);
+  stroke: var(--ink);
+  stroke-width: 4;
+  stroke-linejoin: round;
 
-/* Oversized by a tile each way and slid exactly one tile, so it never seams. */
-.drift {
-  position: absolute;
-  top: -240px;
-  left: -240px;
-  width: calc(100% + 480px);
-  height: calc(100% + 480px);
-  animation: wallpaper-drift 120s linear infinite;
-}
-
-@keyframes wallpaper-drift {
-  to {
-    transform: translate3d(240px, 240px, 0);
+  &.left {
+    left: 4%;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .drift {
-    animation: none;
+  &.right {
+    right: 4%;
+    transform: scaleX(-1);
   }
 }
 
@@ -44,12 +38,14 @@ main {
   align-items: center;
   gap: 20px;
   width: 100%;
-  max-width: 768px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 28px 16px 16px;
 }
 
 .status {
+  position: relative;
+  z-index: 2;
   margin: 0;
   padding: 12px 22px;
   border-radius: 14px;
@@ -64,9 +60,125 @@ main {
   transition: box-shadow 180ms ease;
 }
 
+/* Phones: the two robots side by side, the board below them. */
+.arena {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    'x o'
+    'board board';
+  align-items: end;
+  gap: 16px 12px;
+  width: 100%;
+}
+
+/* Above the starburst, which reaches past the board. */
+.side-x,
+.side-o {
+  position: relative;
+  z-index: 1;
+}
+
+.side-x {
+  grid-area: x;
+}
+
+.side-o {
+  grid-area: o;
+}
+
+.stage {
+  position: relative;
+  grid-area: board;
+  display: grid;
+  place-items: center;
+  padding: 12px 0;
+}
+
+.burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(128%, 580px);
+  translate: -50% -50%;
+  pointer-events: none;
+  animation: spin 90s linear infinite;
+}
+
+.burst-outer {
+  fill: var(--white);
+  stroke: var(--ink);
+  stroke-width: 8;
+  stroke-linejoin: round;
+}
+
+.burst-inner {
+  fill: var(--x);
+  fill-opacity: 0.12;
+}
+
+app-board {
+  position: relative;
+}
+
+/* The striped floor everyone stands on, edge to edge. */
+.floor {
+  display: none;
+  width: 100vw;
+  height: 22px;
+  margin: -20px calc(50% - 50vw) 0;
+  border-block: 4px solid var(--ink);
+  background: repeating-linear-gradient(90deg, var(--ink) 0 64px, var(--yellow) 64px 128px);
+}
+
 .actions {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 10px 14px;
+}
+
+.draws {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  strong {
+    margin-left: 4px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+  }
+}
+
+/* Wide screens: Bolt, the board, Ring, all standing on the floor. */
+@media (min-width: 960px) {
+  .arena {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 440px) minmax(0, 1fr);
+    grid-template-areas: 'x board o';
+  }
+
+  .stage {
+    padding: 0 0 8px;
+  }
+
+  .floor,
+  .bolt {
+    display: block;
+  }
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .burst {
+    animation: none;
+  }
 }
