@@ -1,27 +1,39 @@
 # Rooster
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
+Tic-tac-toe for two, built with Angular 22. Play on one screen, or send a friend a link and play from two phones or computers.
 
-## Development server
+## Run it
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Needs Node `^22.22.3` or `^24.15`.
 
-## Code scaffolding
+```bash
+npm install
+npm start          # http://localhost:4200
+npm test           # unit tests (Vitest)
+npm run build      # production build in dist/rooster/browser
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To try online play with a phone on the same Wi-Fi, run `npm run start:lan` and open the app on the computer at `http://<your-computer's-LAN-IP>:4200`, not `localhost`, so the invite link points somewhere the phone can reach. (Over plain http the Copy button falls back to selecting the link, and the Share button is hidden; both work on an https deployment.)
 
-## Build
+## How online play works
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+There is no backend of ours. The two browsers talk directly over WebRTC using [PeerJS](https://peerjs.com/); the free public PeerJS server only introduces them, and its TURN relay steps in when a network blocks a direct connection.
 
-## Running unit tests
+- Whoever presses **Create invite link** hosts the game and plays **X**. The link carries a random room id (`?join=rooster-…`).
+- The friend who opens it plays **O**. Their moves go to the host, and the host sends the whole game back, so the two screens never disagree.
+- The host must keep the page open: closing it ends the game. A guest who reloads rejoins with the same link and keeps the score.
+- Rounds alternate who opens.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Layout
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+src/app/
+  game/game-logic.ts     pure rules: wins, draws, moves, rounds (+ spec)
+  game/game.store.ts     the game on this screen, as signals
+  game/online.service.ts PeerJS connection, host/guest roles, routing moves
+  board/                 the black handheld board
+  scoreboard/            scores and whose turn it is
+  online-panel/          invite link, copy/share, connection states
+  app-header/            frosted header pill
+  app-footer/            ticket-stub footer with the creator stamp
+```

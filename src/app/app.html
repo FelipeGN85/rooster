@@ -1,0 +1,49 @@
+<!-- Decorative: X, O and # marks tiled over the yellow, drifting one tile every two minutes. -->
+<div class="wallpaper" aria-hidden="true">
+  <svg class="drift">
+    <defs>
+      <pattern id="rooster-marks" width="240" height="240" patternUnits="userSpaceOnUse">
+        <g fill="none" stroke="#111111" stroke-opacity="0.08" stroke-width="6" stroke-linecap="round">
+          <path d="M24 26 L52 54 M52 26 L24 54" />
+          <path d="M150 150 L174 174 M174 150 L150 174" />
+          <circle cx="110" cy="122" r="20" />
+          <circle cx="40" cy="194" r="16" />
+          <path d="M176 30 V94 M200 30 V94 M158 52 H220 M158 74 H220" stroke-width="5" />
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#rooster-marks)" />
+  </svg>
+</div>
+
+<app-header (newRound)="online.newRound()" />
+
+<main>
+  <h1 class="visually-hidden">Rooster tic-tac-toe</h1>
+
+  <p class="status" aria-live="polite" [style.--accent]="statusAccent()">{{ status() }}</p>
+
+  <app-scoreboard
+    [score]="store.state().score"
+    [turn]="store.over() ? null : store.turn()"
+    [myMark]="online.myMark()"
+  />
+
+  <app-board
+    [cells]="store.state().cells"
+    [win]="store.win()"
+    [locked]="!online.canMove()"
+    (play)="online.play($event)"
+  />
+
+  <div class="actions">
+    @if (store.over()) {
+      <button type="button" class="btn btn-dark" (click)="online.newRound()">Play again</button>
+    }
+    <button type="button" class="btn btn-light" (click)="online.resetScore()">Reset score</button>
+  </div>
+
+  <app-online-panel />
+</main>
+
+<app-footer />

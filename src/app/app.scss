@@ -1,0 +1,72 @@
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.wallpaper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Oversized by a tile each way and slid exactly one tile, so it never seams. */
+.drift {
+  position: absolute;
+  top: -240px;
+  left: -240px;
+  width: calc(100% + 480px);
+  height: calc(100% + 480px);
+  animation: wallpaper-drift 120s linear infinite;
+}
+
+@keyframes wallpaper-drift {
+  to {
+    transform: translate3d(240px, 240px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift {
+    animation: none;
+  }
+}
+
+main {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 28px 16px 16px;
+}
+
+.status {
+  margin: 0;
+  padding: 12px 22px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--white);
+  box-shadow: 5px 5px 0 var(--accent);
+  font-family: var(--font-display);
+  font-size: clamp(20px, 5vw, 30px);
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+  transition: box-shadow 180ms ease;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
