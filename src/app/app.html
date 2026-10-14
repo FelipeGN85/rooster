@@ -6,10 +6,11 @@
   <path d="M22 4 L62 4 L42 44 L74 44 L20 124 L34 60 L6 60 Z" />
 </svg>
 
-<!-- Phones: exactly one screen tall, so the board gets whatever room is left. -->
-<div class="screen">
-  <app-header (newRound)="online.newRound()" />
+<!-- Pinned to the top while the page scrolls, as in Event Buddy. -->
+<app-header (newRound)="online.newRound()" />
 
+<!-- Phones: the rest of the screen under the header, so the board gets whatever room is left. -->
+<div class="screen">
   <main>
     <h1 class="visually-hidden">Rooster tic-tac-toe: Bolt versus Ring</h1>
 

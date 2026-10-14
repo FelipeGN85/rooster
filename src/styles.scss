@@ -43,6 +43,12 @@
 
   /* Never smaller than a comfortable thumb press (44 CSS px). */
   --tap: 2.75rem;
+  /*
+   * The pinned header's height, worked out from what it is made of: the gap
+   * above it, its pill's padding and 1px border, and the button inside. The
+   * header and the screen under it both use this, so they always agree.
+   */
+  --header-height: calc(var(--space-s) + 2 * var(--space-2xs) + 2px + var(--tap));
   /* Wide enough for one column of content, on any screen. */
   --content: 48rem;
   --content-narrow: 36rem;

@@ -37,7 +37,7 @@ import { BrandMark } from '../brand-mark/brand-mark';
       margin: 0 auto;
       padding: var(--space-s) var(--space-l) 0;
     }
-    /* No set height: the button and padding decide it. */
+    /* No set height: the button and padding decide it (that sum is --header-height). */
     .pill {
       display: flex;
       align-items: center;
