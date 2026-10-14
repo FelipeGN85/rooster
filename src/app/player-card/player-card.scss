@@ -1,17 +1,18 @@
+/* Wide screens only: phones show the VS strip instead. */
 :host {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-2xs);
   min-width: 0;
 }
 
 .score {
   font-family: var(--font-display);
-  font-size: clamp(44px, 11vw, 72px);
+  font-size: var(--text-score);
   line-height: 1;
   /* An offset shadow, not an outline: a stroke would fill Bungee's narrow 0. */
-  text-shadow: 4px 4px 0 var(--ink);
+  text-shadow: 0.06em 0.06em 0 var(--ink);
 }
 
 .x {
@@ -23,9 +24,9 @@
 }
 
 .name {
-  padding-bottom: 2px;
-  border-bottom: 3px solid transparent;
-  font-size: 14px;
+  padding-bottom: var(--space-3xs);
+  border-bottom: var(--border-bold) solid transparent;
+  font-size: var(--text-xs);
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -36,24 +37,25 @@
   border-bottom-color: var(--ink);
 }
 
+/* The robot takes a share of the screen, up to the size it was drawn at. */
 .figure {
   position: relative;
-  width: min(100%, 108px);
-  margin-top: 44px;
+  width: min(100%, 22vw, 18.75rem);
+  margin-top: calc(var(--space-xl) * 1.6);
 }
 
 .bubble {
   position: absolute;
-  bottom: calc(100% + 6px);
+  bottom: calc(100% + var(--space-2xs));
   left: 50%;
   z-index: 2;
   margin: 0;
-  padding: 8px 12px;
-  border: 3px solid var(--ink);
-  border-radius: 16px;
+  padding: var(--space-xs) var(--space-s);
+  border: var(--border-bold) solid var(--ink);
+  border-radius: var(--radius-m);
   background: var(--white);
   box-shadow: 3px 3px 0 var(--ink);
-  font-size: 13px;
+  font-size: var(--text-l);
   font-weight: 800;
   white-space: nowrap;
   transform: translateX(-50%);
@@ -65,12 +67,12 @@
     position: absolute;
     top: 100%;
     left: 50%;
-    width: 12px;
-    height: 12px;
-    border-right: 3px solid var(--ink);
-    border-bottom: 3px solid var(--ink);
+    width: 0.75em;
+    aspect-ratio: 1;
+    border-right: var(--border-bold) solid var(--ink);
+    border-bottom: var(--border-bold) solid var(--ink);
     background: var(--white);
-    transform: translate(-50%, -6px) rotate(45deg);
+    transform: translate(-50%, -50%) rotate(45deg);
   }
 }
 
@@ -78,17 +80,6 @@
   from {
     opacity: 0;
     transform: translateX(-50%) scale(0.8);
-  }
-}
-
-@media (min-width: 960px) {
-  .figure {
-    width: min(100%, 300px);
-    margin-top: 64px;
-  }
-
-  .bubble {
-    font-size: 17px;
   }
 }
 

@@ -1,15 +1,26 @@
-import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
 
 import { OnlineService } from '../game/online.service';
 
-/** Starting an online game, handing out its link, and what the connection is doing. */
+/**
+ * Starting an online game, handing out its link, and what the connection is
+ * doing. On phones it stays out of the way until there is something to act on,
+ * then rises as a sheet over the bottom of the screen.
+ */
 @Component({
   selector: 'app-online-panel',
+  host: { '[class.sheet]': 'needsAttention()' },
   templateUrl: './online-panel.html',
   styleUrl: './online-panel.scss',
 })
 export class OnlinePanel {
   protected readonly online = inject(OnlineService);
+
+  /** Idle and connected say all they need through the buttons under the board. */
+  protected readonly needsAttention = computed(() => {
+    const status = this.online.status();
+    return status !== 'idle' && status !== 'connected';
+  });
 
   protected readonly copied = signal(false);
 

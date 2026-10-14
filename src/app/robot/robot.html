@@ -1,4 +1,4 @@
-<svg viewBox="0 0 300 360" role="img" [attr.aria-label]="label()">
+<svg [attr.viewBox]="head() ? '56 14 188 180' : '0 0 300 360'" role="img" [attr.aria-label]="label()">
   @if (mark() === 'X') {
     <svg:g stroke="#111111" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
       <svg:path d="M150 42 V80" />
