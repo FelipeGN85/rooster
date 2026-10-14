@@ -22,7 +22,6 @@ import { BrandMark } from '../brand-mark/brand-mark';
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M12 5 V19 M5 12 H19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
         </svg>
-        <!-- A round + on phones; from 640px up there is room to say what it does. -->
         <span class="label">New round</span>
       </button>
     </div>
@@ -34,19 +33,19 @@ import { BrandMark } from '../brand-mark/brand-mark';
       z-index: 30;
       display: block;
       width: 100%;
-      max-width: 768px;
+      max-width: var(--content);
       margin: 0 auto;
-      padding: 12px 16px 0;
+      padding: var(--space-s) var(--space-l) 0;
     }
+    /* No set height: the button and padding decide it. */
     .pill {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      height: 64px;
-      padding: 8px 10px 8px 12px;
+      gap: var(--space-s);
+      padding: var(--space-2xs) var(--space-2xs) var(--space-2xs) var(--space-s);
       border: 1px solid rgb(255 255 255 / 0.9);
-      border-radius: 999px;
+      border-radius: var(--radius-pill);
       background: rgb(255 255 255 / 0.85);
       box-shadow: var(--shadow-float);
       backdrop-filter: blur(12px);
@@ -54,30 +53,27 @@ import { BrandMark } from '../brand-mark/brand-mark';
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: var(--space-xs);
       white-space: nowrap;
     }
     .mark {
-      width: 40px;
-      height: 40px;
+      width: calc(var(--tap) * 0.85);
+      aspect-ratio: 1;
     }
     .wordmark {
       font-family: var(--font-display);
-      font-size: 24px;
+      font-size: calc(var(--text-l) * 1.2);
       line-height: 1;
     }
     .action {
-      min-width: 44px;
-      padding: 0 12px;
-      font-size: 16px;
+      min-width: var(--tap);
+      padding: 0 var(--space-s);
     }
+    /* A round + on the narrowest phones; the words wherever they fit. */
     .label {
       display: none;
     }
-    @media (min-width: 640px) {
-      .action {
-        padding: 0 16px;
-      }
+    @media (min-width: 22.5em) {
       .label {
         display: inline;
       }

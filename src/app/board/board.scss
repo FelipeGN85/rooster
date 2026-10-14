@@ -1,25 +1,30 @@
+/*
+ * The board sizes itself: everything inside is a share of its own width
+ * (cqi = 1% of it), so it keeps its proportions at any size it is given.
+ */
 :host {
   display: block;
   width: 100%;
-  max-width: 440px;
+  max-width: 27.5rem;
   margin: 0 auto;
+  container-type: inline-size;
 }
 
 .device {
-  padding: clamp(14px, 3.5vw, 22px);
-  border-radius: 40px;
+  padding: 3.5cqi;
+  border-radius: 9cqi;
   background: var(--ink);
   box-shadow:
     inset 0 0 0 3px #2a2a2a,
     0 3px 0 #000,
-    0 22px 40px rgb(60 45 0 / 0.35);
+    0 5cqi 9cqi rgb(60 45 0 / 0.35);
 }
 
 .screen {
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
-  border-radius: 22px;
+  border-radius: 5cqi;
   background: radial-gradient(circle at 50% 35%, #1a1d22 0%, #0b0c0e 75%);
 }
 
@@ -32,8 +37,8 @@
 }
 
 .cell {
-  min-width: 44px;
-  min-height: 44px;
+  min-width: var(--tap);
+  min-height: var(--tap);
   padding: 20%;
   border: none;
   background: transparent;
@@ -52,7 +57,7 @@
 
   &:focus-visible {
     outline: 3px solid var(--yellow);
-    outline-offset: -6px;
+    outline-offset: -1.5cqi;
   }
 
   &.dim {
@@ -71,12 +76,12 @@
 
   &.x {
     stroke: var(--x);
-    filter: drop-shadow(0 0 6px rgb(255 59 78 / 0.85));
+    filter: drop-shadow(0 0 1.5cqi rgb(255 59 78 / 0.85));
   }
 
   &.o {
     stroke: var(--o);
-    filter: drop-shadow(0 0 6px rgb(47 155 255 / 0.9));
+    filter: drop-shadow(0 0 1.5cqi rgb(47 155 255 / 0.9));
   }
 }
 
@@ -98,10 +103,10 @@
 .strike {
   stroke: var(--white);
   stroke-width: 8;
-  filter: drop-shadow(0 0 8px var(--x));
+  filter: drop-shadow(0 0 2cqi var(--x));
 
   &.o {
-    filter: drop-shadow(0 0 8px var(--o));
+    filter: drop-shadow(0 0 2cqi var(--o));
   }
 }
 

@@ -4,10 +4,13 @@ import { Mark } from '../game/game-logic';
 
 export type Mood = 'idle' | 'turn' | 'won' | 'lost';
 
-/** Who plays which mark, and what they say. */
-export const ROBOTS: Record<Mark, { name: string; turn: string; win: string }> = {
-  X: { name: 'Bolt', turn: 'Bzzt! My move!', win: 'Bzzt! Victory!' },
-  O: { name: 'Ring', turn: 'Beep boop. My move!', win: 'Beep! I win!' },
+/**
+ * Who plays which mark, and what they say: speech bubbles on wide screens, and
+ * the short `quip` tacked onto the status line on phones.
+ */
+export const ROBOTS: Record<Mark, { name: string; turn: string; win: string; quip: string }> = {
+  X: { name: 'Bolt', turn: 'Bzzt! My move!', win: 'Bzzt! Victory!', quip: 'Bzzt!' },
+  O: { name: 'Ring', turn: 'Beep boop. My move!', win: 'Beep! I win!', quip: 'Beep boop!' },
 };
 
 /**
@@ -21,6 +24,7 @@ export const ROBOTS: Record<Mark, { name: string; turn: string; win: string }> =
     '[class.turn]': 'mood() === "turn"',
     '[class.won]': 'mood() === "won"',
     '[class.lost]': 'mood() === "lost"',
+    '[class.head]': 'head()',
     '[style.--glow]': 'mark() === "X" ? "#ff6b78" : "#7cc4ff"',
   },
   templateUrl: './robot.html',
@@ -29,6 +33,8 @@ export const ROBOTS: Record<Mark, { name: string; turn: string; win: string }> =
 export class Robot {
   readonly mark = input.required<Mark>();
   readonly mood = input<Mood>('idle');
+  /** Just the head, cropped square: the avatar in the phone score strip. */
+  readonly head = input(false);
 
   protected readonly label = computed(() =>
     this.mark() === 'X'

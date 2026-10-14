@@ -57,27 +57,29 @@ let nextStampId = 0;
   `,
   styles: `
     :host {
+      --stamp-size: clamp(4rem, 3.4rem + 2vw, 4.75rem);
       display: block;
       width: 100%;
-      max-width: 768px;
+      max-width: var(--content);
       margin: 0 auto;
-      padding: 16px 16px 40px;
+      padding: var(--space-l) var(--space-l) var(--space-xl);
     }
     .ticket-shadow {
-      max-width: 576px;
+      max-width: var(--content-narrow);
       margin: 0 auto;
       filter: drop-shadow(0 1px 1px rgb(60 45 0 / 0.12)) drop-shadow(0 8px 18px rgb(60 45 0 / 0.18));
     }
     /* Notches are cut with a mask, not painted, so the wallpaper shows through. */
     .ticket {
-      --notch-left: radial-gradient(circle 12px at 0 50%, transparent 98%, #000);
-      --notch-right: radial-gradient(circle 12px at 100% 50%, transparent 98%, #000);
+      --notch: var(--space-s);
+      --notch-left: radial-gradient(circle var(--notch) at 0 50%, transparent 98%, #000);
+      --notch-right: radial-gradient(circle var(--notch) at 100% 50%, transparent 98%, #000);
       position: relative;
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 20px 24px;
-      border-radius: 16px;
+      gap: var(--space-m);
+      padding: var(--space-m) var(--space-l);
+      border-radius: var(--radius-m);
       background: linear-gradient(180deg, var(--white) 0%, var(--cream) 100%);
       -webkit-mask-image: var(--notch-left), var(--notch-right);
       -webkit-mask-composite: source-in;
@@ -85,47 +87,48 @@ let nextStampId = 0;
       mask-composite: intersect;
     }
     .mark {
-      width: 36px;
-      height: 36px;
+      width: calc(var(--tap) * 0.8);
+      aspect-ratio: 1;
     }
+    /* As tall as the text beside it, whatever size that is. */
     .perforation {
       flex-shrink: 0;
-      height: 56px;
-      border-left: 2px dashed var(--line);
+      align-self: stretch;
+      border-left: var(--border) dashed var(--line);
     }
     /* Right padding keeps the tagline from running under the stamp. */
     .copy {
       min-width: 0;
-      padding-right: 72px;
+      padding-right: var(--stamp-size);
     }
     .kicker {
       margin: 0;
-      font-size: 11px;
+      font-size: var(--text-2xs);
       font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #5c5235;
     }
     .tagline {
-      margin: 2px 0 0;
-      font-size: 18px;
+      margin: var(--space-3xs) 0 0;
+      font-size: var(--text-l);
       font-weight: 700;
       letter-spacing: -0.01em;
     }
     .stamp {
       position: absolute;
       top: 50%;
-      right: 16px;
+      right: var(--space-m);
       display: block;
-      border-radius: 999px;
+      border-radius: var(--radius-pill);
       color: var(--stamp);
       transform: translateY(-50%);
     }
     /* Faint at rest, full strength on hover or focus: the hint that it goes somewhere. */
     .stamp svg {
       display: block;
-      width: 76px;
-      height: 76px;
+      width: var(--stamp-size);
+      aspect-ratio: 1;
       opacity: 0.4;
       transform: rotate(-14deg);
       transition: opacity 200ms ease;

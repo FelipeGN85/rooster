@@ -1,5 +1,7 @@
 :host {
   display: block;
+  /* Glow is a share of the robot's own width (cqi), like the board's. */
+  container-type: inline-size;
   transform-origin: 50% 100%;
   transition:
     filter 260ms ease,
@@ -26,7 +28,7 @@ svg {
   animation: bob 1.2s ease-in-out infinite;
 
   .eyes {
-    filter: drop-shadow(0 0 6px var(--glow));
+    filter: drop-shadow(0 0 2.5cqi var(--glow));
   }
 
   .antenna {
@@ -42,20 +44,32 @@ svg {
   }
 }
 
-:host(.lost) {
-  filter: saturate(0.45);
-  transform: rotate(-4deg) translateY(4px);
+/* Cropped to the head: nothing may poke out, and a raised arm would. */
+:host(.head) {
+  svg {
+    overflow: hidden;
+  }
+
+  .arm-up {
+    display: none;
+  }
 }
 
+:host(.lost) {
+  filter: saturate(0.45);
+  transform: rotate(-4deg) translateY(1%);
+}
+
+/* Moves are a share of the robot's own height, so they suit any size. */
 @keyframes bob {
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-2.5%);
   }
 }
 
 @keyframes hop {
   40% {
-    transform: translateY(-26px);
+    transform: translateY(-8%);
   }
 }
 

@@ -8,5 +8,8 @@
     "directory": "./dist/rooster/browser",
     // Any unknown path gets index.html, so the app always loads.
     "not_found_handling": "single-page-application"
-  }
+  },
+  // Lets non-master branches build a preview (`wrangler preview`). Empty is
+  // enough: assets and settings above apply to previews too.
+  "previews": {}
 }

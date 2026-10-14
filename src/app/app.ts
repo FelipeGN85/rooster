@@ -9,18 +9,21 @@ import { OnlineService, isRoomId } from './game/online.service';
 import { OnlinePanel } from './online-panel/online-panel';
 import { PlayerCard } from './player-card/player-card';
 import { Mood, ROBOTS } from './robot/robot';
+import { VsStrip } from './vs-strip/vs-strip';
 
 interface Side {
   mark: Mark;
   score: number;
   name: string;
+  /** The shorter label the phone strip has room for. */
+  tag: string;
   mood: Mood;
   bubble: string | null;
 }
 
 @Component({
   selector: 'app-root',
-  imports: [AppHeader, AppFooter, Board, OnlinePanel, PlayerCard],
+  imports: [AppHeader, AppFooter, Board, OnlinePanel, PlayerCard, VsStrip],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -71,6 +74,12 @@ export class App {
     return [this.side('X', score.x), this.side('O', score.o)];
   });
 
+  /** On phones the speech bubbles are gone; the speaker's catchphrase rides along in the status. */
+  protected readonly quip = computed(() => {
+    const speaker = this.sides().find((side) => side.bubble !== null);
+    return speaker ? ROBOTS[speaker.mark].quip : null;
+  });
+
   constructor() {
     const roomId = new URLSearchParams(location.search).get('join');
     if (isRoomId(roomId)) void this.online.join(roomId);
@@ -83,13 +92,14 @@ export class App {
 
     const who = mine === null ? mark : mark === mine ? 'You' : 'Friend';
     const name = `${robot.name} · ${who}`;
+    const tag = mine === null ? name : who;
 
     if (win) {
       const won = win.mark === mark;
-      return { mark, score, name, mood: won ? 'won' : 'lost', bubble: won ? robot.win : null };
+      return { mark, score, name, tag, mood: won ? 'won' : 'lost', bubble: won ? robot.win : null };
     }
 
     const turn = this.live() && !this.store.over() && this.store.turn() === mark;
-    return { mark, score, name, mood: turn ? 'turn' : 'idle', bubble: turn ? robot.turn : null };
+    return { mark, score, name, tag, mood: turn ? 'turn' : 'idle', bubble: turn ? robot.turn : null };
   }
 }
