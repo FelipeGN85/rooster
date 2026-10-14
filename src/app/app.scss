@@ -4,7 +4,12 @@
   flex-direction: column;
   min-height: 100vh;
   min-height: 100dvh;
-  overflow: hidden;
+  /*
+   * Trims the decorations that reach past the edges (lightning, starburst).
+   * `clip`, not `hidden`: hidden would make this a scroll box of its own and
+   * quietly stop the header from sticking.
+   */
+  overflow: clip;
   /* Comic halftone over the yellow. */
   background-image: radial-gradient(circle, rgb(17 17 17 / 0.12) 0.22rem, transparent 0.25rem);
   background-size: 1.375rem 1.375rem;
@@ -31,15 +36,15 @@
 }
 
 /*
- * Phones first. The header and the game share exactly one screen height, and
+ * Phones first. The game fills exactly the screen under the pinned header, and
  * the board takes whatever is left once the strip, status and buttons are in:
  * no hand-measured heights, so it fits any phone. A floor of 30rem keeps it
- * playable when a phone is turned sideways (the page scrolls then).
+ * playable on very short screens (the page scrolls then).
  */
 .screen {
   display: flex;
   flex-direction: column;
-  height: max(100dvh, 30rem);
+  height: max(100dvh - var(--header-height), 30rem);
 }
 
 main {
@@ -188,7 +193,7 @@ app-board {
  */
 @media (orientation: landscape) and (max-height: 32em) and (max-width: 59.99em) {
   .screen {
-    height: 100dvh;
+    height: calc(100dvh - var(--header-height));
   }
 
   main {
