@@ -8,6 +8,18 @@ updates:
     groups:
       minor-and-patch:
         update-types: [minor, patch]
+    # Angular pins TypeScript to one minor (Angular 22: >=6.0 <6.1), and a new
+    # Angular major needs `ng update` to migrate the code. Both move together,
+    # by hand, with `ng update`: a plain version bump only breaks the build.
+    ignore:
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      - dependency-name: '@angular/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@angular-eslint/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: angular-eslint
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: github-actions
     directory: /
