@@ -34,7 +34,7 @@ The online tests are the only ones that leave your machine: they reach the publi
 1. **checks**: lint, format check, unit tests, then typecheck and build.
 2. **e2e**: the Playwright suite, once checks pass. On failure it uploads the HTML report as a run artifact.
 
-Dependabot (`.github/dependabot.yml`) opens weekly update PRs for npm packages, grouping minor and patch updates into one, and for GitHub Actions.
+No bots open pull requests here: dependency updates are done by hand (Angular and TypeScript together, with `ng update`).
 
 To try online play with a phone on the same Wi-Fi, run `npm run start:lan` and open the app on the computer at `http://<your-computer's-LAN-IP>:4200`, not `localhost`, so the invite link points somewhere the phone can reach. (Over plain http the Copy button falls back to selecting the link, and the Share button is hidden; both work on an https deployment.)
 
