@@ -8,7 +8,7 @@
           [class.dim]="dimmed($index)"
           [disabled]="cell !== null || locked()"
           [attr.aria-label]="label($index, cell)"
-          (click)="play.emit($index)"
+          (click)="move.emit($index)"
         >
           @if (cell === 'X') {
             <svg class="mark x" viewBox="0 0 100 100" fill="none" aria-hidden="true">

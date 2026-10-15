@@ -47,7 +47,14 @@ let nextStampId = 0;
               </textPath>
             </text>
             <rect x="38" y="38" width="24" height="24" rx="5" fill="currentColor" />
-            <text x="50" y="56.5" text-anchor="middle" font-size="15" font-weight="800" fill="#ffffff">
+            <text
+              x="50"
+              y="56.5"
+              text-anchor="middle"
+              font-size="15"
+              font-weight="800"
+              fill="#ffffff"
+            >
               in
             </text>
           </svg>

@@ -10,7 +10,8 @@ export type Role = 'local' | 'host' | 'guest';
  * `opening`: asking the broker for a room. `waiting`: the host's room is open
  * and nobody is in it. `lost`: the other player was there and has gone.
  */
-export type LinkStatus = 'idle' | 'opening' | 'waiting' | 'connecting' | 'connected' | 'lost' | 'failed';
+export type LinkStatus =
+  'idle' | 'opening' | 'waiting' | 'connecting' | 'connected' | 'lost' | 'failed';
 
 /** The guest sends what it wants to do; the host answers with the whole game. */
 type Message =
@@ -41,7 +42,9 @@ export const isRoomId = (value: string | null): value is string =>
 /** `crypto.getRandomValues`, unlike `randomUUID`, also works over plain http on a LAN. */
 function newRoomId(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(10));
-  return 'rooster-' + Array.from(bytes, (byte) => ROOM_ALPHABET[byte % ROOM_ALPHABET.length]).join('');
+  return (
+    'rooster-' + Array.from(bytes, (byte) => ROOM_ALPHABET[byte % ROOM_ALPHABET.length]).join('')
+  );
 }
 
 /** Anything from the other browser is untrusted until it has this shape. */
@@ -50,7 +53,9 @@ function parseMessage(data: unknown): Message | null {
   const message = data as Record<string, unknown>;
   switch (message['type']) {
     case 'move':
-      return typeof message['index'] === 'number' ? { type: 'move', index: message['index'] } : null;
+      return typeof message['index'] === 'number'
+        ? { type: 'move', index: message['index'] }
+        : null;
     case 'new-round':
     case 'reset-score':
       return { type: message['type'] };

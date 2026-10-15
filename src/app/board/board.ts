@@ -27,7 +27,8 @@ export class Board {
   /** True when this screen may not move: not its turn, or the round is over. */
   readonly locked = input(false);
 
-  readonly play = output<number>();
+  // Not `play`: that is a built-in DOM event (media playback).
+  readonly move = output<number>();
 
   protected readonly strike = computed(() => {
     const win = this.win();
