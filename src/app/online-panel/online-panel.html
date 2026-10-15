@@ -6,7 +6,9 @@
           <h2 id="online-title">Play a friend online</h2>
           <p>Send them a link and play from two phones or computers.</p>
         </div>
-        <button type="button" class="btn btn-dark" (click)="online.host()">Create invite link</button>
+        <button type="button" class="btn btn-dark" (click)="online.host()">
+          Create invite link
+        </button>
       </div>
     }
 
@@ -41,7 +43,9 @@
     @case ('failed') {
       <h2 id="online-title">Couldn’t start the online game</h2>
       <p>{{ online.error() }}</p>
-      <button type="button" class="btn btn-dark" (click)="online.leave()">Play on this screen</button>
+      <button type="button" class="btn btn-dark" (click)="online.leave()">
+        Play on this screen
+      </button>
     }
 
     @default {
@@ -88,7 +92,9 @@
         <p>The connection dropped. If their page is still open, you can jump back in.</p>
         <div class="actions">
           <button type="button" class="btn btn-dark" (click)="rejoin()">Reconnect</button>
-          <button type="button" class="btn btn-light" (click)="online.leave()">Play on this screen</button>
+          <button type="button" class="btn btn-light" (click)="online.leave()">
+            Play on this screen
+          </button>
         </div>
       }
     }

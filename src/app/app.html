@@ -53,7 +53,7 @@
           [cells]="store.state().cells"
           [win]="store.win()"
           [locked]="!online.canMove()"
-          (play)="online.play($event)"
+          (move)="online.play($event)"
         />
       </div>
     </div>

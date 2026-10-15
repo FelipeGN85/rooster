@@ -1,4 +1,13 @@
-import { Cell, GameState, findWin, isDraw, isGameState, newGame, nextRound, play } from './game-logic';
+import {
+  Cell,
+  GameState,
+  findWin,
+  isDraw,
+  isGameState,
+  newGame,
+  nextRound,
+  play,
+} from './game-logic';
 
 const board = (marks: string): Cell[] =>
   marks.split('').map((mark) => (mark === 'X' || mark === 'O' ? mark : null));

@@ -55,6 +55,8 @@ export class App {
         return 'Joining…';
       case 'lost':
         return 'Friend disconnected';
+      case 'failed':
+        return 'Not connected';
     }
 
     const turn = this.store.turn();
@@ -100,6 +102,13 @@ export class App {
     }
 
     const turn = this.live() && !this.store.over() && this.store.turn() === mark;
-    return { mark, score, name, tag, mood: turn ? 'turn' : 'idle', bubble: turn ? robot.turn : null };
+    return {
+      mark,
+      score,
+      name,
+      tag,
+      mood: turn ? 'turn' : 'idle',
+      bubble: turn ? robot.turn : null,
+    };
   }
 }

@@ -20,7 +20,12 @@ import { BrandMark } from '../brand-mark/brand-mark';
         (click)="newRound.emit()"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M12 5 V19 M5 12 H19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
+          <path
+            d="M12 5 V19 M5 12 H19"
+            stroke="currentColor"
+            stroke-width="2.6"
+            stroke-linecap="round"
+          />
         </svg>
         <span class="label">New round</span>
       </button>
